@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoriesComponent } from './categories.component';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -19,8 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
             (m) => m.CategoriesProductsModule
           ),
       },
-    ]),
-    HttpClientModule
+    ])
   ],
   declarations: [CategoriesComponent]
 })

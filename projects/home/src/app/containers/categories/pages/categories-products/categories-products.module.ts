@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoriesProductsComponent } from './categories-products.component';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 import { PaginatorModule } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
 
@@ -15,7 +14,6 @@ import { TagModule } from 'primeng/tag';
         component: CategoriesProductsComponent
       },
     ]),
-    HttpClientModule,
     PaginatorModule,
     TagModule
   ],

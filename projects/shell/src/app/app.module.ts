@@ -6,11 +6,11 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects, authReducer } from '@commons-lib';
+import { AuthEffects, AuthInterceptor, authReducer, LoaderSpinnerModule, ModalErrorModule } from '@commons-lib';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,13 +22,21 @@ import { AuthEffects, authReducer } from '@commons-lib';
     FormsModule,
     StoreModule.forRoot({ auth: authReducer }),
     AutoCompleteModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     TieredMenuModule,
     ButtonModule,
-    EffectsModule.forRoot([AuthEffects])
+    HttpClientModule,
+    EffectsModule.forRoot([AuthEffects]),
+    LoaderSpinnerModule,
+    ModalErrorModule
+],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

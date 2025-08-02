@@ -31,9 +31,11 @@
     </div>
     <div class="container mx-auto px-2 h-full overflow-auto flex-1" id="main-router">
         <router-outlet></router-outlet>
+        <app-modal-error></app-modal-error>
     </div>
     <div class="footer">
         
     </div>
 </div>
 <p-tieredMenu #userMenu [popup]="true" [model]="userMenuItems"></p-tieredMenu>
+<lib-loader-spinner></lib-loader-spinner>
