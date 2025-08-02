@@ -1,0 +1,58 @@
+<div class="h-full p-6">
+  <div class="flex justify-center items-center h-full">
+    <div class="flex flex-col pb-4 items-center w-[45vw]">
+      <div class="w-full p-9 rounded-lg border-2 bg-white max-w-screen-sm">
+        <div class="flex flex-col items-center justify-center gap-4">
+          <form [formGroup]="editUser" (ngSubmit)="onSubmit()" class="p-fluid flex flex-col gap-9 w-full">
+            <div class="field flex flex-col gap-3">
+              <label for="names">Nombre</label>
+              <input id="names" type="names" pInputText formControlName="names" placeholder="Laura Rojas"
+                [ngClass]="{'input-invalid': editUser.get('names')?.invalid && (editUser.get('names')?.touched || editUser.get('names')?.dirty)}" />
+              <span class="p-error text-sm" *ngIf="editUser.get('names')?.touched && editUser.get('names')?.invalid">
+                <ng-container *ngIf="editUser.get('names')?.errors?.['required']">
+                  El nombre es obligatorio.
+                </ng-container>
+              </span>
+            </div>
+            <div class="field flex flex-col gap-3">
+              <label for="phone">Número de teléfono</label>
+              <input id="phone" type="phone" pInputText formControlName="phone" placeholder="3214567976"
+                [ngClass]="{'input-invalid': editUser.get('phone')?.invalid && (editUser.get('phone')?.touched || editUser.get('phone')?.dirty)}" />
+              <span class="p-error text-sm" *ngIf="editUser.get('phone')?.touched && editUser.get('phone')?.invalid">
+                <ng-container *ngIf="editUser.get('phone')?.errors?.['required']">
+                  El teléfono es obligatorio.
+                </ng-container>
+              </span>
+            </div>
+            <div class="field flex flex-col gap-3">
+              <label for="email">Correo electrónico</label>
+              <input id="email" type="email" pInputText formControlName="email" placeholder="tucorreo@ejemplo.com"
+                [ngClass]="{'input-invalid': editUser.get('email')?.invalid && (editUser.get('email')?.touched || editUser.get('email')?.dirty)}" />
+              <span class="p-error text-sm" *ngIf="editUser.get('email')?.touched && editUser.get('email')?.invalid">
+                <ng-container *ngIf="editUser.get('email')?.errors?.['required']">
+                  El correo es obligatorio.
+                </ng-container>
+                <ng-container *ngIf="editUser.get('email')?.errors?.['email']">
+                  Formato de correo inválido.
+                </ng-container>
+              </span>
+            </div>
+            <div class="field flex flex-col gap-3">
+              <label for="roles">Roles</label>
+              <p-multiSelect id="roles" [options]="availableRoles" formControlName="roles" optionLabel="name"
+                optionValue="code" placeholder="Selecciona los roles"
+                [ngClass]="{'input-invalid': editUser.get('roles')?.invalid && (editUser.get('roles')?.touched || editUser.get('roles')?.dirty)}">
+              </p-multiSelect>
+              <span class="p-error text-sm" *ngIf="editUser.get('roles')?.touched && editUser.get('roles')?.invalid">
+                <ng-container *ngIf="editUser.get('roles')?.errors?.['required']">
+                  Debe seleccionar al menos un rol.
+                </ng-container>
+              </span>
+            </div>
+            <p-button label="Editar usuario" type="submit" [disabled]="editUser.invalid"></p-button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

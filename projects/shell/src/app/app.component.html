@@ -1,0 +1,39 @@
+<div class="flex flex-col min-h-[100vh]">
+    <div class="header">
+        <div class="container_navbar">
+            <div class="container_logo">
+                <img src="https://pngimg.com/d/amazon_PNG25.png" alt="Logo" />
+            </div>
+            <div class="container_search">
+                <div style="width: 100%;">
+                    <p-autoComplete [(ngModel)]="value" [suggestions]="items" (completeMethod)="search($event)" field="title"
+                        [inputId]="'product-search'" (onSelect)="onProductSelect($event)"
+                        placeholder="Escribe el nombre del producto" [appendTo]="'body'" styleClass="full-width-autocomplete">
+                    </p-autoComplete>
+                </div>
+            </div>
+            <div class="flex justify-end items-center gap-8">
+                <button pButton 
+                        pRipple 
+                        type="button" 
+                        icon="pi pi-user" 
+                        class="p-button-rounded p-button-info p-button-outlined"
+                        (click)="userMenu.toggle($event)">
+                </button>
+                <button pButton 
+                        pRipple 
+                        type="button" 
+                        icon="pi pi-cart-plus" 
+                        class="p-button-rounded p-button-warning p-button-outlined">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-auto px-2 h-full overflow-auto flex-1" id="main-router">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="footer">
+        
+    </div>
+</div>
+<p-tieredMenu #userMenu [popup]="true" [model]="userMenuItems"></p-tieredMenu>
