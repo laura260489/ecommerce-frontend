@@ -1,0 +1,37 @@
+<div style="width: 100%; display: flex; flex-direction: row; justify-content: center;">
+  <div class="products_category" *ngIf="categoryProducts; else loading">
+    <div
+      *ngFor="let producto of categoryProducts.products.slice(first, first + rows)"
+      class="product_card"
+      (click)="goToProduct(producto.id)"
+    >
+      <div>
+        <img [src]="producto.images[0]" alt="" style="width: 200px;" />
+      </div>
+      <div class="description_product">
+        <div style="display: flex; align-items: center;">
+          <span style="font-weight: 300; font-size: 24px;">{{ producto.title }}</span>
+        </div>
+        <div class="aditional_information">
+          <div style="gap: 30px; display: flex; align-items: center;">
+            <span style="font-size: 24px; font-weight: 400;">$ {{ producto.price }}</span>
+            <span style="color: #CC0C39;">{{ producto.discountPercentage }}% <span>OFF</span></span>
+          </div>
+          <div>
+            <p-tag severity="info" value="Llega gratis mañana"></p-tag>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p-paginator
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="categoryProducts.total"
+      (onPageChange)="onPageChange($event)"
+    ></p-paginator>
+  </div>
+
+  <ng-template #loading>
+    <p>Cargando productos...</p>
+  </ng-template>
+</div>
