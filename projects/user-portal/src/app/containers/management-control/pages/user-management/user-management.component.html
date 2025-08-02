@@ -1,4 +1,4 @@
-<div class="p-6 flex flex-col gap-8">
+<div class="p-6 flex flex-col gap-8 justify-center">
     <div>
         <h2 class="text-2xl font-medium">Administración de usuarios</h2>
     </div>
@@ -39,10 +39,10 @@
 
 <p-confirmDialog #cd [style]="{width: '50vw'}">
     <ng-template pTemplate="header">
-        <h3>Confirmación</h3>
+        <h3 class="font-medium text-xl">Confirmación</h3>
     </ng-template>
     <ng-template pTemplate="footer">
-        <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
-        <button type="button" pButton icon="pi pi-check" label="Eliminar" (click)="cd.accept()"></button>
+        <button type="button" pButton icon="pi pi-times" class="p-button-outlined" label="Cancelar" (click)="cd.reject()"></button>
+        <button class="p-button-outlined p-button-danger" type="button" pButton icon="pi pi-check" label="Eliminar" (click)="cd.accept()"></button>
     </ng-template>
 </p-confirmDialog>
