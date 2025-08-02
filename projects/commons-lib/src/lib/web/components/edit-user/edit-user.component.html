@@ -44,11 +44,6 @@
                 [optionDisabled]="isRoleDisabled"
                 [ngClass]="{'input-invalid': editUser.get('roles')?.invalid && (editUser.get('roles')?.touched || editUser.get('roles')?.dirty)}">
               </p-multiSelect>
-              <span class="p-error text-sm" *ngIf="editUser.get('roles')?.touched && editUser.get('roles')?.invalid">
-                <ng-container *ngIf="editUser.get('roles')?.errors?.['required']">
-                  Debe seleccionar al menos un rol.
-                </ng-container>
-              </span>
             </div>
             <p-button label="Editar usuario" type="submit" [disabled]="editUser.invalid"></p-button>
           </form>
