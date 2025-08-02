@@ -26,7 +26,7 @@
             </div>
             <div class="field flex flex-col gap-3">
               <label for="email">Correo electrónico</label>
-              <input id="email" type="email" pInputText formControlName="email" placeholder="tucorreo@ejemplo.com"
+              <input id="email" type="email" pInputText formControlName="email" placeholder="tucorreo@ejemplo.com" disabled="true"
                 [ngClass]="{'input-invalid': editUser.get('email')?.invalid && (editUser.get('email')?.touched || editUser.get('email')?.dirty)}" />
               <span class="p-error text-sm" *ngIf="editUser.get('email')?.touched && editUser.get('email')?.invalid">
                 <ng-container *ngIf="editUser.get('email')?.errors?.['required']">
@@ -41,13 +41,9 @@
               <label for="roles">Roles</label>
               <p-multiSelect id="roles" [options]="availableRoles" formControlName="roles" optionLabel="name"
                 optionValue="code" placeholder="Selecciona los roles"
+                [optionDisabled]="isRoleDisabled"
                 [ngClass]="{'input-invalid': editUser.get('roles')?.invalid && (editUser.get('roles')?.touched || editUser.get('roles')?.dirty)}">
               </p-multiSelect>
-              <span class="p-error text-sm" *ngIf="editUser.get('roles')?.touched && editUser.get('roles')?.invalid">
-                <ng-container *ngIf="editUser.get('roles')?.errors?.['required']">
-                  Debe seleccionar al menos un rol.
-                </ng-container>
-              </span>
             </div>
             <p-button label="Editar usuario" type="submit" [disabled]="editUser.invalid"></p-button>
           </form>

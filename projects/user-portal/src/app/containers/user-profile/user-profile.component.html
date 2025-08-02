@@ -1,3 +1,29 @@
-<p>
-  user-profile works!
-</p>
+<div class="flex flex-col p-6 gap-5">
+  <span class="text-2xl font-semibold">Datos personales</span>
+  <p-card>
+    <ng-template pTemplate="header">
+
+    </ng-template>
+    <div class="info-block" *ngIf="userData">
+      <div class="info-block">
+        <span class="font-semibold">Nombre completo</span>
+        <span>{{userData.name}}</span>
+      </div>
+      <div class="info-block">
+        <span class="font-semibold">E-mail</span>
+        <span>{{userData.email}}</span>
+      </div>
+      <div class="info-block">
+        <span class="font-semibold">Teléfono</span>
+        <span>332223332</span>
+      </div>
+      <div class="info-block">
+        <span class="font-semibold">Roles</span>
+        <span>{{userData.role}}</span>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <button type="button" pButton icon="pi pi-pencil" class="" label="Modificar" (click)="editUser(userData.id)"></button>
+    </ng-template>
+  </p-card>
+</div>

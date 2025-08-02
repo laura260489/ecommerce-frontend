@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserResponse } from '@commons-lib';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -17,7 +17,7 @@ export class EditUserComponent implements OnInit {
 
   public availableRoles: any[] = [
     { name: 'Administrador', code: 'admin' },
-    { name: 'Cliente', code: 'client' }
+    { name: 'Cliente', code: 'client', disabled: true }
   ];
 
   constructor(private fb: FormBuilder, private http: HttpClient, public config: DynamicDialogConfig) { }
@@ -51,9 +51,13 @@ export class EditUserComponent implements OnInit {
         });
       },
       error: () => {
-        
+
       }
     });
+  }
+
+  isRoleDisabled(role: any): boolean {
+    return role.code === 'client';
   }
 
   onSubmit() {

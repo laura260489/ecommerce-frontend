@@ -13,14 +13,27 @@ import { ButtonModule } from 'primeng/button';
     ButtonModule,
     RouterModule.forChild([
       {
-        path: '',
+        path: "",
         component: RemoteEntryComponent,
+        children: [
+          { path: "", redirectTo: "categorias", pathMatch: "full" },
+          {
+            path: "categorias",
+            loadChildren: () =>
+              import("../containers/categories/categories.module").then(
+                (m) => m.CategoriesModule
+              ),
+          },
+          {
+            path: "producto",
+            loadChildren: () =>
+              import("../containers//product/product.module").then(
+                (m) => m.ProductModule
+              ),
+          },
+        ],
       },
-      {
-        path: 'producto',
-        loadChildren: () => import('../containers/product/product/product.module').then(m => m.ProductModule)
-      }
-    ])
+    ]),
   ],
 })
 export class RemoteEntryModule { }
