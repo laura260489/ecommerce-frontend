@@ -4,3 +4,4 @@ export * from "./edit-user";
 export * from "./report-table";
 export * from "./modal-error";
 export * from "./errors-form";
+export * from "./modal-information";

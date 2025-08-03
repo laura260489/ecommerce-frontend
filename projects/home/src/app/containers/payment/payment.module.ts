@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PaymentComponent } from './payment.component';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { ModalInformationModule } from '@commons-lib';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { ButtonModule } from 'primeng/button';
       path: '',
       component: PaymentComponent
     }]),
-    ButtonModule
+    ButtonModule,
+    ModalInformationModule
   ],
   declarations: [PaymentComponent]
 })

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { selectCartProducts } from '@commons-lib';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { clearCart, ModalInformationService, selectCartProducts } from '@commons-lib';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -7,14 +8,31 @@ import { Store } from '@ngrx/store';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })
-export class PaymentComponent implements OnInit {
+export class PaymentComponent{
 
   products$ = this.store.select(selectCartProducts);
 
-  constructor(private store: Store) { }
+  constructor(private store: Store, private readonly modalInformationService: ModalInformationService, private router: Router) { }
 
-  ngOnInit() {
-    console.log(this.products$)
+
+  public showModal(): void {
+    this.modalInformationService.setConfigModal({
+      message: "Pago exitoso",
+      showButton: true,
+      buttonConfig: {
+        label: "Volver a inicio",
+        navigate: "/"
+      }
+    });
+  }
+
+  public modalClose(event: boolean){
+    this.modalInformationService.setConfigModal(null);
+    this.store.dispatch(clearCart());
+  }
+
+  public navigateToCategories(){
+    this.router.navigate(['/categorias'])
   }
 
 }

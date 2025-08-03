@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./modal-error.component.scss']
 })
 export class ModalErrorComponent implements OnInit {
-  public display: boolean = false;
+  public display: boolean;
   public message: string = '';
 
   //* Se utiliza para manejar el ciclo de vida o para emitir una señal de destrucción.
@@ -18,18 +18,15 @@ export class ModalErrorComponent implements OnInit {
   constructor(private modalService: ErrorModalService, private router: Router) { }
 
   ngOnInit() {
-          this.modalService
-        .getConfigModal()
-        .pipe(takeUntil(this._destroyer$))
-        .subscribe( message => {
-          if(message) this.message = message;
-        });
+    this.modalService
+      .getConfigModal()
+      .pipe(takeUntil(this._destroyer$))
+      .subscribe(message => {
+        if (message) {
+          this.message = message;
+          this.display = true;
+        };
+      });
   }
-
-
-  showDialog() {
-    this.display = true;
-  }
-
 
 }
