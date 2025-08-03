@@ -51,6 +51,8 @@ module.exports = {
           "@angular/common": { singleton: true, strictVersion: true, requiredVersion: 'auto' }, 
           "@angular/common/http": { singleton: true, strictVersion: true, requiredVersion: 'auto' }, 
           "@angular/router": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+          "@ngrx/store": { singleton: true, strictVersion: true, requiredVersion: '14.3.3' },
+          "@ngrx/effects": { singleton: true, strictVersion: true, requiredVersion: '14.3.3' },
 
           ...sharedMappings.getDescriptors()
         })

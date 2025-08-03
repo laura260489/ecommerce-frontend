@@ -9,9 +9,10 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects, AuthInterceptor, authReducer, LoaderSpinnerModule, ModalErrorModule } from '@commons-lib';
+import { AuthEffects, AuthInterceptor, authReducer, CartEffects, cartReducer, LoaderSpinnerModule, ModalErrorModule } from '@commons-lib';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-
+import { BadgeModule } from 'primeng/badge';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 @NgModule({
   declarations: [
     AppComponent
@@ -20,16 +21,21 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    StoreModule.forRoot({ auth: authReducer }),
+    StoreModule.forRoot({
+      auth: authReducer,
+      cart: cartReducer
+    }),
     AutoCompleteModule,
     BrowserAnimationsModule,
     TieredMenuModule,
     ButtonModule,
     HttpClientModule,
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, CartEffects]),
     LoaderSpinnerModule,
-    ModalErrorModule
-],
+    ModalErrorModule,
+    BadgeModule,
+    OverlayPanelModule,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

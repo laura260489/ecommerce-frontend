@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { addToCart } from '@commons-lib';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-product',
@@ -13,10 +15,11 @@ export class ProductComponent implements OnInit {
   public data: any[] = [];
 
   public quantities: { label: string; value: number }[] = [];
-  public quantity: number = 1;
   public stock: number = 0;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  public selectedQuantity: { label: string; value: number } | null = null;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private store: Store) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -45,12 +48,13 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  onQuantityChange(value: number): void {
-    this.quantity = value;
-  }
-
   get inStock(): boolean {
     return this.producto?.availabilityStatus?.includes('In Stock');
+  }
+
+  public addProduct(producto: any) {
+    const quantity = this.selectedQuantity?.value || 1;
+    this.store.dispatch(addToCart({ product: producto, quantity: quantity }));
   }
 
 }

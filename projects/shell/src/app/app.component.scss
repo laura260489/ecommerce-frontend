@@ -43,3 +43,7 @@
   height: 40px;
   padding: 0;
 }
+
+::ng-deep .p-badge{
+    background-color: red;
+}
