@@ -12,15 +12,8 @@
                             <input id="email" type="email" pInputText formControlName="email"
                                 placeholder="tucorreo@ejemplo.com"
                                 [ngClass]="{'input-invalid': loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)}" />
-                            <span class="p-error text-sm"
-                                *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
-                                <ng-container *ngIf="loginForm.get('email')?.errors?.['required']">
-                                    El correo es obligatorio.
-                                </ng-container>
-                                <ng-container *ngIf="loginForm.get('email')?.errors?.['email']">
-                                    Formato de correo inválido.
-                                </ng-container>
-                            </span>
+                            <app-errors-form [control]="loginForm.get('email')" label="correo">
+                            </app-errors-form>
                         </div>
 
                         <div class="field flex flex-col gap-3">
@@ -28,19 +21,16 @@
                             <input id="password" type="password" pInputText formControlName="password"
                                 placeholder="Contraseña"
                                 [ngClass]="{'input-invalid': loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)}" />
-                            <span class="p-error text-sm"
-                                *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
-                                <ng-container *ngIf="loginForm.get('password')?.errors?.['required']">
-                                    La contraseña es obligatoria.
-                                </ng-container>
-                            </span>
+                            <app-errors-form [control]="loginForm.get('password')" label="contraseña">
+                            </app-errors-form>
                         </div>
 
                         <p-button label="Iniciar sesión" type="submit" [disabled]="loginForm.invalid"></p-button>
 
                     </form>
 
-                    <a class="text-sm text-[#314170] underline cursor-pointer" (click)="navigateCreateAccount()">¿No tiene cuenta? Registrese aquí</a>
+                    <a class="text-sm text-[primaryBase] underline cursor-pointer" (click)="navigateCreateAccount()">¿No
+                        tiene cuenta? Registrese aquí</a>
 
                 </div>
             </div>

@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import {TableModule} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
-import { ConfirmationModalModule } from '@commons-lib';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
@@ -21,7 +20,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     TableModule,
     ButtonModule,
     DynamicDialogModule,
-    ConfirmationModalModule,
     ConfirmDialogModule,
   ],
   declarations: [UserManagementComponent],

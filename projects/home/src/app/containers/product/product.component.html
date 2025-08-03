@@ -33,7 +33,7 @@
             <span class="text-[14px] text-black/55">
               Conoce los tiempos y formas de envío.
             </span>
-            <span class="text-[14px] text-[#598cca]">
+            <span class="text-[14px] text-[secondaryD100]">
               Calcular cuándo llega
             </span>
           </div>
@@ -54,9 +54,8 @@
                 <span *ngIf="stock < 25">{{ stock }} disponibles</span>
               </div>
             </div>
-            <div class="flex flex-col gap-2">
-              <p-button label="Comprar ahora"></p-button>
-              <p-button label="Agregar al carrito" styleClass="bg-[#ceddf4] border-[#ceddf4] text-[#3b82f6]"
+            <div class="flex flex-col gap-2 w-full">
+              <p-button label="Agregar al carrito" styleClass="bg-[whiteBase] border-[whiteBase] text-[secondaryBase]"
                 (click)="addProduct(producto)"></p-button>
             </div>
           </div>

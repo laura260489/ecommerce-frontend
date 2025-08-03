@@ -7,6 +7,7 @@ import { DividerModule } from 'primeng/divider';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ErrorsFormModule } from '../errors-form/errors-form.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ReactiveFormsModule,
     CheckboxModule,
     InputTextModule,
-    MultiSelectModule
+    MultiSelectModule,
+    ErrorsFormModule
   ],
   declarations: [EditUserComponent],
   exports: [EditUserComponent]
