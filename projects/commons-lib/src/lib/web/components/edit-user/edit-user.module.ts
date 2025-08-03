@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditUserComponent } from './edit-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -13,7 +12,6 @@ import { MultiSelectModule } from 'primeng/multiselect';
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
     ButtonModule,
     DividerModule,
     ReactiveFormsModule,

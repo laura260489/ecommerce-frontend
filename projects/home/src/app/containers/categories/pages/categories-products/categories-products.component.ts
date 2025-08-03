@@ -27,7 +27,6 @@ export class CategoriesProductsComponent implements OnInit {
           
         }
       });
-      console.log(params.get('slug'))
     });
   }
 

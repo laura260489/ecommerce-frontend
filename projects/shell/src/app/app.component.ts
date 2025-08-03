@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { selectUser } from '@commons-lib';
+import { selectCartProducts, selectCartTotalQuantity, selectUser } from '@commons-lib';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,8 @@ import { selectUser } from '@commons-lib';
 export class AppComponent {
   title = 'shell';
 
+  public totalQuantity = 0;
+
   public value: any = '';
   public items: any[] = [];
   public categories: any[] = [];
@@ -20,6 +22,10 @@ export class AppComponent {
   public userMenuItems: any[] = [];
 
   user$ = this.store.select(selectUser);
+
+  products$ = this.store.select(selectCartProducts);
+
+  totalQuantity$ = this.store.select(selectCartTotalQuantity);
 
   constructor(private router: Router, private http: HttpClient, private store: Store) { }
 
@@ -53,6 +59,9 @@ export class AppComponent {
           { label: 'Iniciar sesión', icon: 'pi pi-sign-in', command: () => this.router.navigate(['/auth']) },
         ];
       }
+    })
+    this.totalQuantity$.subscribe(total => {
+      this.totalQuantity = total;
     });
   }
 
@@ -70,6 +79,10 @@ export class AppComponent {
     const selectedProduct = event;
     this.value = selectedProduct;
     this.router.navigate(['/producto', selectedProduct.id]);
+  }
+
+  public navigateToPayment(){
+    this.router.navigate(['/pago']);
   }
 
 }

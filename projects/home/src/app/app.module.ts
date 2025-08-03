@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RemoteEntryModule } from './remote-entry/remote-entry.module';
+
 
 @NgModule({
   declarations: [
@@ -12,9 +12,7 @@ import { RemoteEntryModule } from './remote-entry/remote-entry.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RemoteEntryModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

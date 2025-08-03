@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RemoteEntryComponent } from './remote-entry.component';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-
+import { StoreModule } from '@ngrx/store';
 @NgModule({
   declarations: [
     RemoteEntryComponent
@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
   imports: [
     CommonModule,
     ButtonModule,
+    StoreModule,
     RouterModule.forChild([
       {
         path: "",
@@ -27,8 +28,15 @@ import { ButtonModule } from 'primeng/button';
           {
             path: "producto",
             loadChildren: () =>
-              import("../containers//product/product.module").then(
+              import("../containers/product/product.module").then(
                 (m) => m.ProductModule
+              ),
+          },
+          {
+            path: "pago",
+            loadChildren: () =>
+              import("../containers/payment/payment.module").then(
+                (m) => m.PaymentModule
               ),
           },
         ],

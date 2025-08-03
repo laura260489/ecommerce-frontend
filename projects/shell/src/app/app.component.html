@@ -6,34 +6,50 @@
             </div>
             <div class="container_search">
                 <div style="width: 100%;">
-                    <p-autoComplete [(ngModel)]="value" [suggestions]="items" (completeMethod)="search($event)" field="title"
-                        [inputId]="'product-search'" (onSelect)="onProductSelect($event)"
-                        placeholder="Escribe el nombre del producto" [appendTo]="'body'" styleClass="full-width-autocomplete">
+                    <p-autoComplete [(ngModel)]="value" [suggestions]="items" (completeMethod)="search($event)"
+                        field="title" [inputId]="'product-search'" (onSelect)="onProductSelect($event)"
+                        placeholder="Escribe el nombre del producto" [appendTo]="'body'"
+                        styleClass="full-width-autocomplete">
                     </p-autoComplete>
                 </div>
             </div>
             <div class="flex justify-end items-center gap-8">
-                <button pButton 
-                        pRipple 
-                        type="button" 
-                        icon="pi pi-user" 
-                        class="p-button-rounded p-button-info p-button-outlined"
-                        (click)="userMenu.toggle($event)">
+                <button pButton pRipple type="button" icon="pi pi-user"
+                    class="p-button-rounded p-button-info p-button-outlined" (click)="userMenu.toggle($event)">
                 </button>
-                <button pButton 
-                        pRipple 
-                        type="button" 
-                        icon="pi pi-cart-plus" 
-                        class="p-button-rounded p-button-warning p-button-outlined">
-                </button>
+                <div class="cart-button-container">
+                    <button pButton type="button" icon="pi pi-cart-plus" class="p-button-warning"
+                        (click)="cartOverlay.toggle($event)">
+                    </button>
+                    <span pBadge [value]="totalQuantity" *ngIf="totalQuantity > 0"></span>
+                    <p-overlayPanel #cartOverlay [style]="{ width: '300px' }">
+                        <div class="p-3">
+                            <div class="grid grid-cols-2 gap-2 font-semibold text-gray-700 border-b pb-2">
+                                <div>Producto</div>
+                                <div class="text-right">Cantidad</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 py-2 border-b" *ngFor="let product of products$ | async">
+                                <div>{{ product.title }}</div>
+                                <div class="text-right">{{ product.quantity }}</div>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                        <button pButton type="button" label="Ir a pagar" class="p-button-warning" (click)="navigateToPayment()">
+                        </button>
+                        </div>
+                    </p-overlayPanel>
+                </div>
+
             </div>
         </div>
     </div>
     <div class="container mx-auto px-2 h-full overflow-auto flex-1" id="main-router">
         <router-outlet></router-outlet>
+        <app-modal-error></app-modal-error>
     </div>
     <div class="footer">
-        
+
     </div>
 </div>
 <p-tieredMenu #userMenu [popup]="true" [model]="userMenuItems"></p-tieredMenu>
+<lib-loader-spinner></lib-loader-spinner>

@@ -12,9 +12,8 @@ import { RemoteEntryModule } from './remote-entry/remote-entry.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RemoteEntryModule,
+    RemoteEntryModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
