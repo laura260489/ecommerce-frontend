@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Category } from '@commons-lib';
 
 @Component({
   selector: 'app-categories',
@@ -14,7 +15,7 @@ export class CategoriesComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get<any[]>('https://dummyjson.com/products/categories').subscribe({
+    this.http.get<Category[]>(process.env['urlBase']+'list-categories').subscribe({
       next: (data) => {
         this.categories = data;
       },

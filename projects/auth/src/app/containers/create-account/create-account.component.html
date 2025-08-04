@@ -6,14 +6,22 @@
           <h2 class="text-primaryD100 font-semibold mb-4 lg:text-[22px] text-center pb-2 text-[16px]">
             Crea tu cuenta
           </h2>
-          <span class="text-sm text-[primaryBase] underline cursor-pointer" (click)="navigateToLogin()">¿Ya eres cliente?
+          <span class="text-sm text-[primaryBase] underline cursor-pointer" (click)="navigateToLogin()">¿Ya eres
+            cliente?
             Iniciar sesión</span>
           <form [formGroup]="createAccount" (ngSubmit)="onSubmit()" class="p-fluid flex flex-col gap-9 w-full">
             <div class="field flex flex-col gap-3">
-              <label for="names">Nombre</label>
-              <input id="names" type="names" pInputText formControlName="names" placeholder="Laura Rojas"
-                [ngClass]="{'input-invalid': createAccount.get('names')?.invalid && (createAccount.get('names')?.touched || createAccount.get('names')?.dirty)}" />
-              <app-errors-form [control]="createAccount.get('names')" label="nombre">
+              <label for="name">Nombre(s)</label>
+              <input id="name" type="name" pInputText formControlName="name" placeholder="Laura"
+                [ngClass]="{'input-invalid': createAccount.get('name')?.invalid && (createAccount.get('name')?.touched || createAccount.get('name')?.dirty)}" />
+              <app-errors-form [control]="createAccount.get('name')" label="nombre">
+              </app-errors-form>
+            </div>
+            <div class="field flex flex-col gap-3">
+              <label for="lastName">Apellido(s)</label>
+              <input id="lastName" type="lastName" pInputText formControllastName="lastName" placeholder="Rojas"
+                [ngClass]="{'input-invalid': createAccount.get('lastName')?.invalid && (createAccount.get('lastName')?.touched || createAccount.get('lastName')?.dirty)}" />
+              <app-errors-form [control]="createAccount.get('lastName')" label="nombre">
               </app-errors-form>
             </div>
             <div class="field flex flex-col gap-3">

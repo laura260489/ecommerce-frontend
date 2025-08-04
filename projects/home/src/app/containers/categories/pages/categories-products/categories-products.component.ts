@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductResponse } from '@commons-lib';
 
 @Component({
   selector: 'app-categories-products',
@@ -9,7 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CategoriesProductsComponent implements OnInit {
 
-  slug!: string;
   categoryProducts: any;
   first = 0;
   rows = 10;
@@ -18,18 +18,22 @@ export class CategoriesProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.slug = params.get('slug');
-      this.http.get<any[]>('https://dummyjson.com/products/category/'+ this.slug).subscribe({
+      const slug = params.get('slug');
+      const paramsHttp = new HttpParams().set('categoryName', slug ?? '');
+
+      this.http.get<ProductResponse[]>(
+        process.env['urlBase'] + 'products/category',
+        { params: paramsHttp }
+      ).subscribe({
         next: (data) => {
           this.categoryProducts = data;
         },
-        error: () => {
-          
+        error: (error) => {
+          console.error('Error al obtener productos:', error);
         }
       });
     });
   }
-
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;

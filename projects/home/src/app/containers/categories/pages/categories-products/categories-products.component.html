@@ -1,12 +1,12 @@
 <div style="width: 100%; display: flex; flex-direction: row; justify-content: center;">
   <div class="products_category" *ngIf="categoryProducts">
     <div
-      *ngFor="let producto of categoryProducts.products.slice(first, first + rows)"
+      *ngFor="let producto of categoryProducts.slice(first, first + rows)"
       class="product_card"
       (click)="goToProduct(producto.id)"
     >
       <div>
-        <img [src]="producto.images[0]" alt="" style="width: 200px;" />
+        <img src="https://img.freepik.com/vector-premium/no-hay-foto-disponible-icono-vector-simbolo-imagen-predeterminado-imagen-proximamente-sitio-web-o-aplicacion-movil_87543-10615.jpg" alt="" style="width: 200px;" />
       </div>
       <div class="description_product">
         <div style="display: flex; align-items: center;">
@@ -15,7 +15,7 @@
         <div class="aditional_information">
           <div style="gap: 30px; display: flex; align-items: center;">
             <span style="font-size: 24px; font-weight: 400;">$ {{ producto.price }}</span>
-            <span class="text-[errorBase]">{{ producto.discountPercentage }}% <span>OFF</span></span>
+            <span class="text-[errorBase]">{{ producto.discount_percentage }}% <span>OFF</span></span>
           </div>
           <div>
             <p-tag severity="info" value="Llega gratis mañana"></p-tag>
@@ -26,7 +26,7 @@
     <p-paginator
       [first]="first"
       [rows]="rows"
-      [totalRecords]="categoryProducts.total"
+      [totalRecords]="categoryProducts.length"
       (onPageChange)="onPageChange($event)"
     ></p-paginator>
   </div>
