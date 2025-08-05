@@ -1,4 +1,4 @@
-# bolivar-core-template-frontend
+# ecommerce-frontend
 
 # Crear micro-front 
 ```
