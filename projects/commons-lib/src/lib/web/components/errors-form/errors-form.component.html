@@ -3,7 +3,7 @@
   <ng-container *ngIf="control?.errors?.['required']">
     El campo es obligatorio.
   </ng-container>
-  <ng-container *ngIf="control?.errors?.['email']">
+   <ng-container *ngIf="hasFormatError()">
     Formato de {{label}} inválido.
   </ng-container>
 </span>

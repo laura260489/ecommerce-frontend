@@ -53,11 +53,16 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 
+  private getErrorMessage(serviceError: any): string {
+    if(serviceError.message) return serviceError.message;
+    return 'Error en la consulta, intente de nuevo más tarde';
+  }
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.status === 403) {
       this._router.navigate(['/']);
     } else {
-      this.showModalError("Error en la consulta, intente de nuevo más tarde");
+      this.showModalError(this.getErrorMessage(error.error));
     }
     return throwError(() => error);
   }

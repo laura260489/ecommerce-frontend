@@ -6,3 +6,4 @@ export * from "./order-reponse.interface";
 export * from "./product-report.interface";
 export * from "./product-random.interface";
 export * from "./discounts.interface";
+export * from "./jwt-payload.interface";

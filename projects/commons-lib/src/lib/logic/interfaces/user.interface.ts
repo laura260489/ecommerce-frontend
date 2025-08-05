@@ -1,7 +1,10 @@
 export interface UserResponse {
-    id: number;
-    email: string;
+    id: string;
     phone: string | null;
-    name: string;
-    role: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    frecuent?: boolean;
+    full_name?: string;
+    roles: string[];
 }

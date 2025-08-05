@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { EditUserComponent, UserResponse } from '@commons-lib';
+import { EditUserComponent, selectUser, UserResponse } from '@commons-lib';
+import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
@@ -15,17 +16,12 @@ export class UserManagementComponent implements OnInit {
 
   public users: UserResponse[];
 
-  constructor(private http: HttpClient, private dialogService: DialogService, private confirmationService: ConfirmationService) { }
+  user$ = this.store.select(selectUser);
+
+  constructor(private http: HttpClient, private dialogService: DialogService, private confirmationService: ConfirmationService, private store: Store) { }
 
   ngOnInit() {
-    this.http.get<UserResponse[]>('https://api.escuelajs.co/api/v1/users').subscribe({
-      next: (data) => {
-        this.users = data
-      },
-      error: () => {
-        this.users = [];
-      }
-    });
+    this.searchOnUsers();
   }
 
   editUser(id: string) {
@@ -48,7 +44,25 @@ export class UserManagementComponent implements OnInit {
     this.confirmationService.confirm({
       message: '¿Desea eliminar al usuario?',
       accept: () => {
-        
+        this.http.delete<any>(process.env['urlBase'] + 'administration/delete-user/' + id).subscribe({
+          next: (data) => {
+            if(data.status_code === 200) this.searchOnUsers();
+          },
+          error: () => {
+            this.users = [];
+          }
+        });
+      }
+    });
+  }
+
+  private searchOnUsers(){
+    this.http.get<UserResponse[]>(process.env['urlBase'] + 'administration/list-users').subscribe({
+      next: (data) => {
+        this.users = data
+      },
+      error: () => {
+        this.users = [];
       }
     });
   }
