@@ -56,6 +56,8 @@ export class RemoteEntryComponent implements OnInit {
   private decodeToken(token: string) {
     const decoded: CustomJwtPayload = jwtDecode<CustomJwtPayload>(token);
 
+    sessionStorage.setItem('token', token);
+
     const user: User = {
       id: decoded.user_id,
       firstName: decoded.first_name,
