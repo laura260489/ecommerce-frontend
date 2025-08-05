@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-### 0.0.1 (2025 - 08-02)
+### 0.1.0 (2025-08-04)
+
+#### Features
+- Integration with API
+- development of payment page
+- development of card funcionallity
+- Implementation random order generator
+
+### 0.0.1 (2025-08-02)
 
 #### Features
 - Initial provisioning of the system includes user setup and configuration
