@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { clearCart, ModalInformationService, selectCartProducts, selectCartTotalPrice } from '@commons-lib';
+import { clearCart, DiscountResponse, ModalInformationService, selectCartProducts, selectCartTotalPrice } from '@commons-lib';
 import { Store } from '@ngrx/store';
 import { combineLatest, Subject, takeUntil } from 'rxjs';
 
@@ -10,25 +10,45 @@ import { combineLatest, Subject, takeUntil } from 'rxjs';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })
-export class PaymentComponent {
+export class PaymentComponent implements OnInit {
 
   public disablePayment: boolean = true;
 
   products$ = this.store.select(selectCartProducts);
   total$ = this.store.select(selectCartTotalPrice);
 
+  public discounts: any[] = [];
+
+  public totalPaymentDiscount: number = 0;
+
   private destroy$ = new Subject<void>();
 
   constructor(private store: Store, private readonly modalInformationService: ModalInformationService, private router: Router, private http: HttpClient,) { }
 
+  ngOnInit(): void {
+    this.http.get<DiscountResponse[]>(process.env['urlBase'] + 'active-discount').subscribe({
+      next: (data) => {
+        this.discounts = data.map(item => ({
+          description: item.description,
+          value: item.percentage
+        }));
+
+        this.total$.subscribe((total)=>{
+          const totalDiscount = this.discounts.reduce((acc, item) => acc + item.value, 0);
+          this.totalPaymentDiscount = total - (total * (totalDiscount / 100));
+        })
+      },
+      error: () => {
+      }
+    });
+  }
 
   goPay() {
-
     combineLatest([this.products$, this.total$])
       .pipe(takeUntil(this.destroy$)).subscribe(([productsData, total]) => {
         const body = {
           userId: "3e183a18-715b-11f0-85c7-a20814e8f805",
-          total_amount: total,
+          total_amount: this.totalPaymentDiscount!=0 ? this.totalPaymentDiscount : total,
           products: productsData.reduce((acc, product) => {
             acc[product.id] = product.quantity;
             return acc;

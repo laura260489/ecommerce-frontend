@@ -4,3 +4,5 @@ export * from "./category.interface";
 export * from "./product-response.interface";
 export * from "./order-reponse.interface";
 export * from "./product-report.interface";
+export * from "./product-random.interface";
+export * from "./discounts.interface";
