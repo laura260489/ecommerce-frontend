@@ -4,26 +4,27 @@
     <ng-template pTemplate="header">
 
     </ng-template>
-    <div class="info-block" *ngIf="userData">
+    <div class="info-block" *ngIf="user$ | async as user">
       <div class="info-block">
         <span class="font-semibold">Nombre completo</span>
-        <span>{{userData.name}}</span>
+        <span>{{user.firstName}} {{user.lastName}}</span>
       </div>
       <div class="info-block">
         <span class="font-semibold">E-mail</span>
-        <span>{{userData.email}}</span>
+        <span>{{user.sub}}</span>
       </div>
       <div class="info-block">
         <span class="font-semibold">Teléfono</span>
-        <span>332223332</span>
+        <span>*********</span>
       </div>
       <div class="info-block">
         <span class="font-semibold">Roles</span>
-        <span>{{userData.role}}</span>
+        <span>{{user.role}}</span>
+      </div>
+      <div class="flex flex-row justify-center">
+        <button type="button" pButton icon="pi pi-pencil" class="" label="Modificar"
+          (click)="editUser(user.id)"></button>
       </div>
     </div>
-    <ng-template pTemplate="footer">
-      <button type="button" pButton icon="pi pi-pencil" class="" label="Modificar" (click)="editUser(userData.id)"></button>
-    </ng-template>
   </p-card>
 </div>

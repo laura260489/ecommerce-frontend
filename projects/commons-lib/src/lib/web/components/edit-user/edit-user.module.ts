@@ -8,6 +8,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ErrorsFormModule } from '../errors-form/errors-form.module';
+import { ModalInformationModule } from '../modal-information/modal-information.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { ErrorsFormModule } from '../errors-form/errors-form.module';
     CheckboxModule,
     InputTextModule,
     MultiSelectModule,
-    ErrorsFormModule
+    ErrorsFormModule,
+    ModalInformationModule
   ],
   declarations: [EditUserComponent],
   exports: [EditUserComponent]

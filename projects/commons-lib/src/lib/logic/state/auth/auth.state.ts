@@ -1,9 +1,10 @@
 export interface User {
     id: string;
-    name: string;
-    email: string;
-    token: string;
-    role: string;
+    firstName: string;
+    lastName: string;
+    sub: string;
+    frecuent: boolean;
+    role: string[];
 }
 
 export interface AuthState {

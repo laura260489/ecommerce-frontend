@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { EditUserComponent, selectUser } from '@commons-lib';
+import { EditUserComponent, selectUser, User } from '@commons-lib';
 import { Store } from '@ngrx/store';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -16,8 +16,6 @@ export class UserProfileComponent implements OnInit {
 
   public ref!: DynamicDialogRef;
 
-  public userData: any;
-
   private destroy$ = new Subject<void>();
 
   constructor(private store: Store, private http: HttpClient, private dialogService: DialogService,) { }
@@ -25,16 +23,6 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       if (user == null) return;
-
-      this.http.get<any>('https://api.escuelajs.co/api/v1/users/' + user.id).subscribe({
-        next: (data) => {
-          console.log(data);
-          this.userData = data
-        },
-        error: () => {
-
-        }
-      });
     });
   }
 

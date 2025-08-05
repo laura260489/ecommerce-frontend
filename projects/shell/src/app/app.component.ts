@@ -36,7 +36,7 @@ export class AppComponent {
           { label: 'Mi cuenta', icon: 'pi pi-user', command: () => this.router.navigate(['/portal-usuario/mi-cuenta']) },
           { label: 'Cerrar sesión', icon: 'pi pi-sign-out', command: () => this.router.navigate(['/auth']) },
         ]
-        if (user.role == 'admin') this.userMenuItems.push(
+        if (user.role.includes('admin')) this.userMenuItems.push(
           {
             label: 'Panel de control',
             icon: 'pi pi-cog',

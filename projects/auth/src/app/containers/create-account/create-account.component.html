@@ -19,8 +19,9 @@
             </div>
             <div class="field flex flex-col gap-3">
               <label for="lastName">Apellido(s)</label>
-              <input id="lastName" type="lastName" pInputText formControllastName="lastName" placeholder="Rojas"
+              <input id="lastName" type="text" pInputText formControlName="lastName" placeholder="Rojas"
                 [ngClass]="{'input-invalid': createAccount.get('lastName')?.invalid && (createAccount.get('lastName')?.touched || createAccount.get('lastName')?.dirty)}" />
+
               <app-errors-form [control]="createAccount.get('lastName')" label="nombre">
               </app-errors-form>
             </div>
@@ -67,3 +68,5 @@
     </div>
   </div>
 </div>
+
+<app-modal-information (isClosed)="modalClose($event)"></app-modal-information>

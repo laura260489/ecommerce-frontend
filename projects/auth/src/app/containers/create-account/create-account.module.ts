@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
-import { ErrorsFormModule } from '@commons-lib';
+import { ErrorsFormModule, ModalInformationModule } from '@commons-lib';
 
 @NgModule({
   imports: [
@@ -22,7 +22,8 @@ import { ErrorsFormModule } from '@commons-lib';
     InputTextModule,
     ReactiveFormsModule,
     DividerModule,
-    ErrorsFormModule
+    ErrorsFormModule,
+    ModalInformationModule
   ],
   declarations: [CreateAccountComponent],
 })

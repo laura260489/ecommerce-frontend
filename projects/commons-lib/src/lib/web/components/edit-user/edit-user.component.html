@@ -28,7 +28,6 @@
             <div class="field flex flex-col gap-3">
               <label for="email">Correo electrónico</label>
               <input id="email" type="email" pInputText formControlName="email" placeholder="tucorreo@ejemplo.com"
-                disabled="true"
                 [ngClass]="{'input-invalid': editUser.get('email')?.invalid && (editUser.get('email')?.touched || editUser.get('email')?.dirty)}" />
               <app-errors-form [control]="editUser.get('email')" label="correo">
               </app-errors-form>
@@ -47,3 +46,5 @@
     </div>
   </div>
 </div>
+
+<app-modal-information (isClosed)="modalClose($event)"></app-modal-information>
