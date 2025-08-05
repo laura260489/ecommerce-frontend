@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { selectCartProducts, selectCartTotalQuantity, selectUser } from '@commons-lib';
+import { addToCart, ProductRandom, ProductResponse, selectCartProducts, selectCartTotalQuantity, selectUser } from '@commons-lib';
 
 @Component({
   selector: 'app-root',
@@ -66,9 +66,10 @@ export class AppComponent {
   }
 
   public search(event: any) {
-    this.http.get<any>('https://dummyjson.com/products/search?q=' + event.query + '&limit=6').subscribe({
+    const params = new HttpParams().set('title', event.query);
+    this.http.get<any>(process.env['urlBase']+'search-product', { params }).subscribe({
       next: (data) => {
-        this.items = data.products
+        this.items = data.content;
       },
       error: () => {
         this.items = [];
@@ -81,8 +82,20 @@ export class AppComponent {
     this.router.navigate(['/producto', selectedProduct.id]);
   }
 
-  public navigateToPayment(){
+  public navigateToPayment() {
     this.router.navigate(['/pago']);
+  }
+
+  public goToRandomOrder() {
+    this.http.get<ProductRandom[]>(process.env['urlBase'] + 'product-random').subscribe({
+      next: (data) => {
+        data.forEach(item => {
+          this.store.dispatch(addToCart({ product: item.product, quantity: item.quantity }));
+        });
+      },
+      error: () => {
+      }
+    });
   }
 
 }

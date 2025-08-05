@@ -2,7 +2,7 @@
     <div class="header">
         <div class="container_navbar">
             <div class="container_logo">
-                <img src="https://pngimg.com/d/amazon_PNG25.png" alt="Logo" />
+                <img src="" alt="Logo" />
             </div>
             <div class="container_search">
                 <div style="width: 100%;">
@@ -14,6 +14,7 @@
                 </div>
             </div>
             <div class="flex justify-end items-center gap-8">
+                <button pButton type="button" label="Pedido aleatorio" class="p-button-warning" (click)="goToRandomOrder()"></button>
                 <button pButton pRipple type="button" icon="pi pi-user"
                     class="p-button-rounded p-button-info p-button-outlined" (click)="userMenu.toggle($event)">
                 </button>

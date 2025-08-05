@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { last } from 'rxjs';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-create-account',
@@ -16,8 +16,9 @@ export class CreateAccountComponent implements OnInit {
 
   ngOnInit() {
     this.createAccount = this.fb.group({
-      names: ['', [Validators.required], Validators.pattern(/^[^0-9]*$/)],
-      phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],   
+      name: ['', [Validators.required], Validators.pattern(/^[^0-9]*$/)],
+      lastName: ['', [Validators.required], Validators.pattern(/^[^0-9]*$/)],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)]]
     });
@@ -25,14 +26,18 @@ export class CreateAccountComponent implements OnInit {
 
   onSubmit() {
     if (this.createAccount.valid) {
-      const { names, lastNames, email, phone, password } = this.createAccount.value;
-      
+      const { name, lastName, email, phone, password } = this.createAccount.value;
+
+      let passwordHash = password.trim();
+      let hash = CryptoJS.SHA3(passwordHash, { outputLength: 256 });
+      passwordHash = hash.toString(CryptoJS.enc.Hex);
+
     } else {
       this.createAccount.markAllAsTouched();
     }
   }
   navigateToLogin() {
     this.router.navigate(['/auth']);
-  }    
+  }
 
 }

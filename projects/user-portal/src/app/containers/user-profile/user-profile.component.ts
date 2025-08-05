@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { EditUserComponent, selectUser } from '@commons-lib';
 import { Store } from '@ngrx/store';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,10 +18,12 @@ export class UserProfileComponent implements OnInit {
 
   public userData: any;
 
+  private destroy$ = new Subject<void>();
+
   constructor(private store: Store, private http: HttpClient, private dialogService: DialogService,) { }
 
   ngOnInit() {
-    this.user$.subscribe((user) => {
+    this.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       if (user == null) return;
 
       this.http.get<any>('https://api.escuelajs.co/api/v1/users/' + user.id).subscribe({
@@ -44,5 +47,11 @@ export class UserProfileComponent implements OnInit {
       }
     });
   }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
 
 }

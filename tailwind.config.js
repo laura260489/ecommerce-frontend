@@ -5,6 +5,16 @@ module.exports = {
     ],
     theme: {
         extend: {
+            colors: {
+                'primaryBase': '#314170',
+                'secondaryD100': '#598cca',
+                'secondaryBase': '#3b82f6',
+                'tertiaryBase': 'var(--c-lib-tb-tertiaryBase)',
+                'complementaryBase': 'var(--c-lib-tb-complementaryBase)',
+                'errorBase': '#CC0C39',
+                'whiteBase': '#ceddf4',
+                'whiteBase200': '#f3f0f6'
+            },
             screens: {
                 'sm': '576px',
                 'md': '768px',

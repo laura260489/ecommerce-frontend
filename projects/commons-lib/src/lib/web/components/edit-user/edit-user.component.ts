@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserResponse } from '@commons-lib';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -27,7 +27,8 @@ export class EditUserComponent implements OnInit {
     this.idUser = this.config.data?.idUser;
 
     this.editUser = this.fb.group({
-      names: ['', [Validators.required, Validators.pattern(/^[^0-9]*$/)]],
+      name: ['', [Validators.required, Validators.pattern(/^[^0-9]*$/)]],
+      lastName: ['', [Validators.required, Validators.pattern(/^[^0-9]*$/)]],
       phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       email: ['', [Validators.required, Validators.email]],
       roles: [[], Validators.required],
@@ -44,7 +45,8 @@ export class EditUserComponent implements OnInit {
         this.user = data
 
         this.editUser.patchValue({
-          names: this.user.name,
+          name: this.user.name,
+          lastName: 'Rojas',
           email: this.user.email,
           phone: this.user.phone || '32145665556',
           roles: ['admin', 'client']
@@ -62,7 +64,7 @@ export class EditUserComponent implements OnInit {
 
   onSubmit() {
     if (this.editUser.valid) {
-      const { names, phone, email, rol } = this.editUser.value;
+      const { name, lastName, phone, email, rol } = this.editUser.value;
 
     } else {
       this.editUser.markAllAsTouched();

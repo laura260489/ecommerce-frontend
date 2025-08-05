@@ -1,0 +1,9 @@
+<span class="p-error text-sm"
+      *ngIf="control?.touched && control?.invalid">
+  <ng-container *ngIf="control?.errors?.['required']">
+    El campo es obligatorio.
+  </ng-container>
+  <ng-container *ngIf="control?.errors?.['email']">
+    Formato de {{label}} inválido.
+  </ng-container>
+</span>

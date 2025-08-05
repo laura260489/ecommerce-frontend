@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { StoreModule } from '@ngrx/store';
+import { ErrorsFormModule } from '@commons-lib';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { StoreModule } from '@ngrx/store';
     ButtonModule,
     PasswordModule,
     InputTextModule,
-    StoreModule
+    StoreModule,
+    ErrorsFormModule
   ]
 })
 export class RemoteEntryModule { }
