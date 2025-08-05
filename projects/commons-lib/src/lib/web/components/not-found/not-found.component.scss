@@ -1,0 +1,13 @@
+.container__not-found {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 88vh;
+  .lib-tb-answer-state__container-content .lib-tb-answer-state__content .lib-tb-answer-state__title{
+    font-size: 1.5rem;
+  }
+
+  .lib-tb-answer-state__container-content .lib-tb-answer-state__content .lib-tb-answer-state__description{
+    margin-bottom: 0;
+  }
+}

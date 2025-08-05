@@ -1,0 +1,48 @@
+<div class="p-6 flex flex-col gap-8 justify-center">
+    <div>
+        <h2 class="text-2xl font-medium">Administración de usuarios</h2>
+    </div>
+    <p-table [value]="users" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nombre</th>
+                <th>E-mail</th>
+                <th>Rol</th>
+                <th class="text-center important">Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.role}}</td>
+                <td class="flex flex-row justify-start gap-3">
+                    <button pButton 
+                        pRipple 
+                        type="button" 
+                        icon="pi pi-pencil" 
+                        class="p-button-rounded p-button-warning p-button-outlined"
+                        (click)="editUser(user.id)">
+                    </button>
+                    <button pButton 
+                        pRipple 
+                        type="button" 
+                        icon="pi pi-trash" 
+                        class="p-button-rounded p-button-danger p-button-outlined"
+                        (click)="confirm(user.id)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-confirmDialog #cd [style]="{width: '50vw'}">
+    <ng-template pTemplate="header">
+        <h3 class="font-medium text-xl">Confirmación</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-outlined" label="Cancelar" (click)="cd.reject()"></button>
+        <button class="p-button-outlined p-button-danger" type="button" pButton icon="pi pi-check" label="Eliminar" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

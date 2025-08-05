@@ -1,0 +1,68 @@
+<div class="flex flex-col w-max gap-4 h-[80vh] justify-center" *ngIf="producto">
+  <div class="grid grid-cols-[1fr_1fr] w-max">
+    <div class="w-[10%]">
+      <p-galleria [value]="images" [showItemNavigators]="false" [showThumbnails]="true" [showIndicators]="false"
+        [showItemNavigatorsOnHover]="false" [circular]="false" [autoPlay]="false" thumbnailsPosition="left"
+        styleClass="custom-galleria">
+        <ng-template pTemplate="item" let-item>
+          <img [src]="item" class="max-w-[500px] block" />
+        </ng-template>
+
+        <ng-template pTemplate="thumbnail" let-item>
+          <img [src]="item" class="w-[80px] h-[80px] object-cover block mb-2 rounded" />
+        </ng-template>
+      </p-galleria>
+    </div>
+
+    <div class="flex flex-col gap-4 pr-5">
+      <div>
+        <span class="font-semibold text-[22px] font-['Arial']">
+          {{ producto.title }}
+        </span>
+        <div class="flex flex-col">
+          <span class="text-3xl font-light">$ {{ producto.price }}</span>
+          <span>en <span class="text-blue-500">12 cuotas de $ 30 con 0% interés</span></span>
+        </div>
+      </div>
+      <div class="border border-black/10 rounded-lg p-6 w-full">
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col gap-4">
+            <span class="text-blue-500 font-semibold">
+              Envío gratis <span>a todo el país</span>
+            </span>
+            <span class="text-[14px] text-black/55">
+              Conoce los tiempos y formas de envío.
+            </span>
+            <span class="text-[14px] text-[secondaryD100]">
+              Calcular cuándo llega
+            </span>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <div>
+              <span class="font-semibold">
+                {{ inStock ? 'Stock disponible' : 'Sin stock' }}
+              </span>
+            </div>
+
+            <div class="flex flex-row items-center gap-5">
+              <span class="text-[16px] text-black/90">Cantidad: </span>
+              <p-dropdown [options]="quantities" [(ngModel)]="selectedQuantity" optionLabel="label"
+                [ariaLabel]="'Cantidad'" class="dropdown-arrow-only"></p-dropdown>
+              <div class="text-sm text-black/55">
+                <span *ngIf="stock >= 25">(+ 25 disponibles)</span>
+                <span *ngIf="stock < 25">{{ stock }} disponibles</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 w-full">
+              <p-button label="Agregar al carrito" styleClass="bg-[whiteBase] border-[whiteBase] text-[secondaryBase]" [disabled]="stock<=0"
+                (click)="addProduct(producto)"></p-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p-divider></p-divider>
