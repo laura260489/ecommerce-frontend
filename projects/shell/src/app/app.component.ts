@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { addToCart, ProductRandom, ProductResponse, selectCartProducts, selectCartTotalQuantity, selectUser } from '@commons-lib';
+import { addToCart, logout, ProductRandom, ProductResponse, selectCartProducts, selectCartTotalQuantity, selectUser } from '@commons-lib';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +34,7 @@ export class AppComponent {
       if (user != null) {
         this.userMenuItems = [
           { label: 'Mi cuenta', icon: 'pi pi-user', command: () => this.router.navigate(['/portal-usuario/mi-cuenta']) },
-          { label: 'Cerrar sesión', icon: 'pi pi-sign-out', command: () => this.router.navigate(['/auth']) },
+          { label: 'Cerrar sesión', icon: 'pi pi-sign-out', command: () => {this.router.navigate(['/auth']); this.store.dispatch(logout())} },
         ]
         if (user.role.includes('admin')) this.userMenuItems.push(
           {

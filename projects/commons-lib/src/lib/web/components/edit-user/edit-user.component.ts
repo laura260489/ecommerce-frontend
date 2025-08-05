@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalInformationService, updateUser, UserResponse } from '@commons-lib';
+import { ModalInformationService, selectUser, updateUser, User, UserResponse } from '@commons-lib';
 import { Store } from '@ngrx/store';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
@@ -17,9 +17,10 @@ export class EditUserComponent implements OnInit {
   public user: UserResponse;
 
   public availableRoles: any[] = [
-    { name: 'Administrador', code: 'admin' },
     { name: 'Cliente', code: 'client', disabled: true }
   ];
+
+  user$ = this.store.select(selectUser);
 
   constructor(private fb: FormBuilder, private http: HttpClient, public config: DynamicDialogConfig, private modalInformationService: ModalInformationService, private store: Store) { }
 
@@ -34,6 +35,10 @@ export class EditUserComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       roles: [[], Validators.required],
     });
+
+    this.user$.subscribe((user: User)=>{
+      if(user.role.includes('admin')) this.availableRoles.push({ name: 'Administrador', code: 'admin' })
+    })
 
     if (this.idUser != undefined) {
       this.searchOnUser(this.idUser);
@@ -74,7 +79,7 @@ export class EditUserComponent implements OnInit {
         roles: roles
       };
 
-      this.http.put<any>(
+      this.http.put<UserResponse>(
         `${process.env['urlBase']}administration/update-user/${this.idUser}`,
         body,
         {
@@ -82,8 +87,16 @@ export class EditUserComponent implements OnInit {
         }
       ).subscribe({
         next: (response) => {
-          if(response.status_code === 200){ 
-            this.store.dispatch(updateUser({ user: response }));
+          if(response){ 
+            const user: User = {
+              id: response.id,
+              firstName: response.first_name,
+              lastName: response.last_name,
+              frecuent: response.frecuent,
+              sub: response.email,
+              role: response.roles
+            }
+            this.store.dispatch(updateUser({ user: user }));
             this.showModal();
           }
         },

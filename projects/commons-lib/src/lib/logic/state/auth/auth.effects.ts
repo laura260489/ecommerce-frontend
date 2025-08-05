@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
-import { loginSuccess, updateUser } from './auth.actions';
+import { loginSuccess, logout, updateUser } from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -25,6 +25,15 @@ export class AuthEffects {
         { dispatch: false }
     );
 
+    clearUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(logout),
+            tap(() => {
+                sessionStorage.removeItem('user');
+            })
+        ),
+        { dispatch: false }
+    );
 
     constructor(private actions$: Actions) { }
 }
