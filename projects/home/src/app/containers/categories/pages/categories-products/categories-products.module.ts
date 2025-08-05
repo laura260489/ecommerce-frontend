@@ -4,6 +4,7 @@ import { CategoriesProductsComponent } from './categories-products.component';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { TagModule } from 'primeng/tag';
       },
     ]),
     PaginatorModule,
-    TagModule
+    TagModule,
+    ButtonModule
   ],
   declarations: [CategoriesProductsComponent]
 })

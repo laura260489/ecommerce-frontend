@@ -1,3 +1,7 @@
+<div class="flex flex-row py-5 justify-center items-center gap-6">
+    <span class="font-medium text-lg">¿No sabes qué comprar?</span>
+    <button pButton type="button" label="Pedido aleatorio" class="p-button-warning" (click)="goToRandomOrder()"></button>
+</div>
 <div style="width: 100%; display: flex; flex-direction: row; justify-content: center;">
   <div class="products_category" *ngIf="categoryProducts">
     <div
@@ -6,7 +10,7 @@
       (click)="goToProduct(producto.id)"
     >
       <div>
-        <img src="https://img.freepik.com/vector-premium/no-hay-foto-disponible-icono-vector-simbolo-imagen-predeterminado-imagen-proximamente-sitio-web-o-aplicacion-movil_87543-10615.jpg" alt="" style="width: 200px;" />
+        <img [src]="imgBase" alt="" style="width: 200px;" />
       </div>
       <div class="description_product">
         <div style="display: flex; align-items: center;">

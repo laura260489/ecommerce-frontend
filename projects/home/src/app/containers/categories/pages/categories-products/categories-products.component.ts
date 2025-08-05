@@ -1,7 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductResponse } from '@commons-lib';
+import { addToCart, ProductRandom, ProductResponse } from '@commons-lib';
+import { IMG_BASE } from '@commons-lib';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-categories-products',
@@ -10,11 +12,13 @@ import { ProductResponse } from '@commons-lib';
 })
 export class CategoriesProductsComponent implements OnInit {
 
-  categoryProducts: any;
-  first = 0;
-  rows = 10;
+  public categoryProducts: any;
+  public first = 0;
+  public rows = 10;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router,) { }
+  public imgBase = IMG_BASE;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private store: Store) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -41,6 +45,18 @@ export class CategoriesProductsComponent implements OnInit {
 
   goToProduct(productId: number) {
     this.router.navigate(['/producto', productId]);
+  }
+
+  public goToRandomOrder() {
+    this.http.get<ProductRandom[]>(process.env['urlBase'] + 'product-random').subscribe({
+      next: (data) => {
+        data.forEach(item => {
+          this.store.dispatch(addToCart({ product: item.product, quantity: item.quantity }));
+        });
+      },
+      error: () => {
+      }
+    });
   }
 
 }
