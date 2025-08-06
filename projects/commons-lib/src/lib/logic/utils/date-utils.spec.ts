@@ -2,7 +2,6 @@ import { formatDate } from './date-utils';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
-// Registrar el locale español para los tests
 registerLocaleData(localeEs, 'es-CO');
 
 describe('DateUtils', () => {
