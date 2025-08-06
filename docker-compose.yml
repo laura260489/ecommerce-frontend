@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build: .
+    container_name: ecommerce-frontend
+    ports:
+      - "4000:4000"
+    restart: on-failure
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge
