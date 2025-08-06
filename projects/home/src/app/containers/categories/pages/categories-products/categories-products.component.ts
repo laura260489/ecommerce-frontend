@@ -51,6 +51,7 @@ export class CategoriesProductsComponent implements OnInit {
     this.http.get<ProductRandom[]>(process.env['urlBase'] + 'product-random').subscribe({
       next: (data) => {
         data.forEach(item => {
+          sessionStorage.setItem('isFromRandomOrder', 'true');
           this.store.dispatch(addToCart({ product: item.product, quantity: item.quantity }));
         });
       },

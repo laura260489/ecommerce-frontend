@@ -1,53 +1,67 @@
-<ng-container *ngIf="products$ | async as products">
-  <div *ngIf="products.length > 0; else emptyCart" class="flex flex-col gap-4 w-full py-5">
-    <div>
-      <span class="font-semibold text-2xl">Resumen de compra</span>
-    </div>
-    <div *ngFor="let product of products" class="flex items-center gap-4 border p-4 rounded-lg shadow-sm bg-white">
-      <img [src]="imgBase" alt="{{ product.title }}" class="w-20 h-20 object-cover rounded" />
-      <div class="flex flex-col justify-between flex-1">
-        <div class="text-lg font-semibold text-gray-800">
-          {{ product.title }}
-        </div>
+<ng-container *ngIf="user$ | async as user; else noUser">
+  <ng-container *ngIf="products$ | async as products">
+    <div *ngIf="products.length > 0; else emptyCart" class="flex flex-col gap-4 w-full py-5">
+      <div>
+        <span class="font-semibold text-2xl">Resumen de compra</span>
+      </div>
+      <div *ngFor="let product of products" class="flex items-center gap-4 border p-4 rounded-lg shadow-sm bg-white">
+        <img [src]="imgBase" alt="{{ product.title }}" class="w-20 h-20 object-cover rounded" />
+        <div class="flex flex-col justify-between flex-1">
+          <div class="text-lg font-semibold text-gray-800">
+            {{ product.title }}
+          </div>
 
-        <div class="flex flex-wrap sm:justify-between text-sm text-gray-600 mt-2">
-          <div>Cantidad: <span class="font-medium">{{ product.quantity }}</span></div>
-          <div>Precio unitario: ${{ product.price }}</div>
-        </div>
-        <div class="mt-1 text-right font-semibold text-blue-600">
-          Total: ${{ product.price * product.quantity | number: '1.2-2' }}
+          <div class="flex flex-wrap sm:justify-between text-sm text-gray-600 mt-2">
+            <div>Cantidad: <span class="font-medium">{{ product.quantity }}</span></div>
+            <div>Precio unitario: ${{ product.price }}</div>
+          </div>
+          <div class="mt-1 text-right font-semibold text-blue-600">
+            Total: ${{ product.price * product.quantity | number: '1.2-2' }}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="flex flex-col w-full items-end gap-5">
-      <span class="text-xl font-semibold">Total sin descuentos: <span>{{total$ | async}}</span></span>
-      <div class="text-end">
-        <span class="text-xl font-semibold">Descuentos</span>
-        <div *ngFor="let discount of discounts" class="flex gap-2 justify-end">
-          <span>{{discount.description}}</span>
-          <span class="text-color-red">{{discount.value}}<span>%</span></span>
+      <div class="flex flex-col w-full items-end gap-5">
+        <span class="text-xl font-semibold">Total sin descuentos: <span>{{total$ | async}}</span></span>
+        <div class="text-end">
+          <span class="text-xl font-semibold">Descuentos</span>
+          <div *ngFor="let discount of discounts" class="flex gap-2 justify-end">
+            <span>{{discount.description}}</span>
+            <span class="text-color-red">{{discount.value}}<span>%</span></span>
+          </div>
         </div>
-      </div>
 
-      <span class="text-xl font-semibold">Total a pagar: <span>{{ totalPaymentDiscount | number:'1.2-2' }}</span></span>
-      
-    </div>
-    <div class="flex justify-end">
-      <button pButton type="button" label="Pagar" class="p-button-warning" (click)='goPay()'>
-      </button>
-    </div>
-  </div>
-  <ng-template #emptyCart>
-    <div class="w-full flex items-center py-5">
-      <div class="flex flex-col p-5 items-center border rounded-lg shadow-sm bg-white gap-5 w-full">
-        <span>Carrito de compras vacío</span>
-        <button pButton type="button" label="Ir a categorias" class="p-button-warning" (click)='navigateToCategories()'>
+        <span class="text-xl font-semibold">Total a pagar: <span>{{ totalPaymentDiscount | number:'1.2-2'
+            }}</span></span>
+
+      </div>
+      <div class="flex justify-end">
+        <button pButton type="button" label="Pagar" class="p-button-warning" (click)='goPay()'>
         </button>
       </div>
     </div>
-  </ng-template>
-
+    <ng-template #emptyCart>
+      <div class="w-full flex items-center py-5">
+        <div class="flex flex-col p-5 items-center border rounded-lg shadow-sm bg-white gap-5 w-full">
+          <span>Carrito de compras vacío</span>
+          <button pButton type="button" label="Ir a categorias" class="p-button-warning"
+            (click)='navigateToCategories()'>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
 </ng-container>
 
+<ng-template #noUser>
+  <div class="w-full flex items-center py-5">
+    <div class="flex flex-col p-5 items-center border rounded-lg shadow-sm bg-white gap-5 w-full">
+      <span>Inicie sesión para seguir con su compra</span>
+      <button pButton type="button" label="Iniciar sesión" class="p-button-warning" (click)='navigateToLogin()'>
+      </button>
+    </div>
+  </div>
+</ng-template>
 
-<app-modal-information (isClosed)="modalClose($event)"></app-modal-information>
+
+
+<app-modal-information (isClosed)="modalClose($event)" *ngIf="showSuccess"></app-modal-information>
