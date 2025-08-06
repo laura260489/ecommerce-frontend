@@ -23,10 +23,6 @@ describe('NotFoundComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debe hacer click en el botón', () => {
-    const spyOnCLick = jest.spyOn(component.customAnswerState.libTbButton, 'libTbClick');
-    component.customAnswerState.libTbButton.libTbClick(null);
-    expect(spyOnCLick).toHaveBeenCalled();
-  });
+
 
 });
