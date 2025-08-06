@@ -8,6 +8,8 @@ import { catchError } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { EventBusService } from '../../services/event-bus/event-bus.service';
+import { ErrorModalService } from '../../../web/components/modal-error';
+
 describe('AuthInterceptor', () => {
   let httpClient: HttpClient;
   let interceptor: AuthInterceptor;
@@ -35,6 +37,10 @@ describe('AuthInterceptor', () => {
     getValue: jest.fn()
   }
 
+  const mockErrorModalService = {
+    setConfigModal: jest.fn()
+  }
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
@@ -42,6 +48,7 @@ describe('AuthInterceptor', () => {
         { provide: Router, useValue: mockRouter },
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: EventBusService, useValue: serviceMockBus },
+        { provide: ErrorModalService, useValue: mockErrorModalService },
       ]
     });
     httpClient = TestBed.inject(HttpClient);
@@ -60,9 +67,8 @@ describe('AuthInterceptor', () => {
   it('debe enviar mensajes showSpinner y hideSpinner para HttpResponse correctos', () => {
     const interceptor: AuthInterceptor = TestBed.inject(AuthInterceptor);
     const fakeResponse = { data: 'test' };
-    const request: HttpRequest<any> = new HttpRequest('GET', '/api/data');
     const spySendMessage = jest.spyOn(serviceMockBus, 'sendMessage');
-    interceptor['shouldIgnoreRequest'](request);
+    
     httpClient.get('/api/data').subscribe((response) => {
       expect(response).toEqual(fakeResponse);
       expect(spySendMessage).toHaveBeenNthCalledWith(1, 'showSpinner');

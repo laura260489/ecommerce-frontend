@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 })
 export class RemoteEntryComponent implements OnInit {
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // TODO: Implementar lógica de inicialización si es necesaria
   }
 
   

@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { RemoteEntryComponent } from './remote-entry.component';
 
@@ -8,7 +12,15 @@ describe('RemoteEntryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RemoteEntryComponent ]
+      declarations: [ RemoteEntryComponent ],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        provideMockStore({})
+      ]
     })
     .compileComponents();
 
