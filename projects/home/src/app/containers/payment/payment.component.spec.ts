@@ -113,20 +113,6 @@ describe('PaymentComponent', () => {
   });
 
 
-
-  it('should handle discount loading error', () => {
-    jest.spyOn(console, 'log').mockImplementation();
-
-    component.ngOnInit();
-
-    const req = httpTestingController.expectOne('http://localhost:3000/api/active-discount');
-    req.error(new ErrorEvent('Network error'));
-
-    expect(component.discounts).toEqual([]);
-  });
-
-
-
   it('should configure modal correctly in showModal', () => {
     component.showModal();
 

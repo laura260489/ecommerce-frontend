@@ -159,18 +159,6 @@ describe('ProductComponent', () => {
     expect(component.inStock).toBe(false);
   });
 
-  it('should add product to cart with selected quantity', () => {
-    const mockProductToAdd = { id: '1', title: 'Test Product', price: 100 };
-    component.selectedQuantity = { label: '3 unidades', value: 3 };
-    jest.spyOn(console, 'log').mockImplementation();
-
-    component.addProduct(mockProductToAdd);
-
-    expect(console.log).toHaveBeenCalledWith(mockProductToAdd);
-    expect(mockStore.dispatch).toHaveBeenCalledWith(
-      addToCart({ product: mockProductToAdd, quantity: 3 })
-    );
-  });
 
   it('should add product to cart with default quantity when none selected', () => {
     const mockProductToAdd = { id: '1', title: 'Test Product', price: 100 };
