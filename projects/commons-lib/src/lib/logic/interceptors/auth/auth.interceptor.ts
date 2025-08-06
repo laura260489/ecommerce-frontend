@@ -47,17 +47,44 @@ export class AuthInterceptor implements HttpInterceptor {
 
     this._eventBus.sendMessage(showSpinner);
 
+    const excludedUrls = [
+      'product',
+      'login',
+      'category',
+      'register',
+      'random',
+      'discount'
+    ];
+
+    const shouldExclude = excludedUrls.some(url => request.url.includes(url));
+
+    if (!shouldExclude) {
+      const token = sessionStorage.getItem('token');
+
+      if (token) {
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+      }
+    }
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => this.handleError(error)),
       finalize(() => this._eventBus.sendMessage(hideSpinner))
     );
   }
 
+  private getErrorMessage(serviceError: any): string {
+    if (serviceError.message) return serviceError.message;
+    return 'Error en la consulta, intente de nuevo más tarde';
+  }
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.status === 403) {
       this._router.navigate(['/']);
     } else {
-      this.showModalError("Error en la consulta, intente de nuevo más tarde");
+      this.showModalError(this.getErrorMessage(error.error));
     }
     return throwError(() => error);
   }

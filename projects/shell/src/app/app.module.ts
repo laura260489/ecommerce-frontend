@@ -13,6 +13,7 @@ import { AuthEffects, AuthInterceptor, authReducer, CartEffects, cartReducer, Lo
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BadgeModule } from 'primeng/badge';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ChipModule } from 'primeng/chip';
 @NgModule({
   declarations: [
     AppComponent
@@ -35,6 +36,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     ModalErrorModule,
     BadgeModule,
     OverlayPanelModule,
+    ChipModule
   ],
   providers: [
     {

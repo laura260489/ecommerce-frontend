@@ -13,4 +13,10 @@ export class ErrorsFormComponent {
 
   constructor() { }
 
+  hasFormatError(): boolean {
+    if (!this.control || !this.control.errors) return false;
+    const errorKeys = Object.keys(this.control.errors);
+    return errorKeys.some(key => key !== 'required');
+  }
+
 }

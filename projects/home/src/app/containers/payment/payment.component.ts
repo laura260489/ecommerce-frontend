@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { clearCart, DiscountResponse, ModalInformationService, selectCartProducts, selectCartTotalPrice } from '@commons-lib';
+import { clearCart, DiscountResponse, IMG_BASE, ModalInformationService, selectCartProducts, selectCartTotalPrice, selectUser, User } from '@commons-lib';
 import { Store } from '@ngrx/store';
-import { combineLatest, Subject, takeUntil } from 'rxjs';
+import { catchError, combineLatest, map, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-payment',
@@ -21,34 +21,64 @@ export class PaymentComponent implements OnInit {
 
   public totalPaymentDiscount: number = 0;
 
+  public imgBase = IMG_BASE;
+
+  public showSuccess: boolean = false;
+
   private destroy$ = new Subject<void>();
+
+  private userId: string = "";
+
+  user$ = this.store.select(selectUser);
 
   constructor(private store: Store, private readonly modalInformationService: ModalInformationService, private router: Router, private http: HttpClient,) { }
 
+  
   ngOnInit(): void {
-    this.http.get<DiscountResponse[]>(process.env['urlBase'] + 'active-discount').subscribe({
-      next: (data) => {
-        this.discounts = data.map(item => ({
-          description: item.description,
-          value: item.percentage
-        }));
+    combineLatest([this.user$, this.total$])
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(([user, total]) => {
+          this.userId = user?.id ? user.id : this.userId;
+          const isFromRandomOrder = JSON.parse(sessionStorage.getItem('isFromRandomOrder') || 'false');
 
-        this.total$.subscribe((total)=>{
-          const totalDiscount = this.discounts.reduce((acc, item) => acc + item.value, 0);
-          this.totalPaymentDiscount = total - (total * (totalDiscount / 100));
+          return this.http.get<DiscountResponse[]>(`${process.env["urlBase"]}active-discount`).pipe(
+            map((discounts) => {
+              const filtered = discounts
+                .filter(discount => {
+                  if (!user?.frecuent && discount.description.includes('frecuente')) {
+                    return false;
+                  }
+                  if (!isFromRandomOrder && discount.description.includes('aleatorio')) {
+                    return false;
+                  }
+                  return true;
+                })
+                .map(discount => ({
+                  description: discount.description,
+                  value: discount.percentage
+                }));
+
+              this.discounts = filtered;
+
+              const totalDiscount = filtered.reduce((acc, d) => acc + d.value, 0);
+              this.totalPaymentDiscount = total - (total * (totalDiscount / 100));
+            }),
+            catchError(err => {
+              return of();
+            })
+          );
         })
-      },
-      error: () => {
-      }
-    });
+      )
+      .subscribe();
   }
 
   goPay() {
     combineLatest([this.products$, this.total$])
       .pipe(takeUntil(this.destroy$)).subscribe(([productsData, total]) => {
         const body = {
-          userId: "3e183a18-715b-11f0-85c7-a20814e8f805",
-          total_amount: this.totalPaymentDiscount!=0 ? this.totalPaymentDiscount : total,
+          userId: this.userId,
+          total_amount: this.totalPaymentDiscount != 0 ? this.totalPaymentDiscount : total,
           products: productsData.reduce((acc, product) => {
             acc[product.id] = product.quantity;
             return acc;
@@ -62,7 +92,11 @@ export class PaymentComponent implements OnInit {
           }
         ).subscribe({
           next: (response) => {
-            if (response) this.showModal();
+            if (response) {
+              sessionStorage.setItem('isFromRandomOrder', 'false');
+              this.showSuccess = true;
+              this.showModal();
+            };
           },
           error: (error) => {
             console.log(error)
@@ -89,6 +123,10 @@ export class PaymentComponent implements OnInit {
 
   public navigateToCategories() {
     this.router.navigate(['/categorias'])
+  }
+
+  public navigateToLogin() {
+    this.router.navigate(['/auth'])
   }
 
   ngOnDestroy() {

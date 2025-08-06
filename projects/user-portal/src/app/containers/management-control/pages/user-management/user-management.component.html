@@ -7,15 +7,15 @@
             <tr>
                 <th>Nombre</th>
                 <th>E-mail</th>
-                <th>Rol</th>
+                <th>Roles</th>
                 <th class="text-center important">Acciones</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
             <tr>
-                <td>{{user.name}}</td>
+                <td>{{user.first_name}} {{user.last_name}}</td>
                 <td>{{user.email}}</td>
-                <td>{{user.role}}</td>
+                <td>{{user.roles}}</td>
                 <td class="flex flex-row justify-start gap-3">
                     <button pButton 
                         pRipple 
@@ -24,13 +24,15 @@
                         class="p-button-rounded p-button-warning p-button-outlined"
                         (click)="editUser(user.id)">
                     </button>
-                    <button pButton 
-                        pRipple 
-                        type="button" 
-                        icon="pi pi-trash" 
-                        class="p-button-rounded p-button-danger p-button-outlined"
-                        (click)="confirm(user.id)">
-                    </button>
+                    <div *ngIf="user$ | async as userStorage">
+                        <button pButton
+                            pRipple 
+                            type="button" 
+                            icon="pi pi-trash" 
+                            class="p-button-rounded p-button-danger p-button-outlined"
+                            (click)="confirm(user.id)" [disabled]="userStorage.id === user.id">
+                        </button>
+                    </div>
                 </td>
             </tr>
         </ng-template>

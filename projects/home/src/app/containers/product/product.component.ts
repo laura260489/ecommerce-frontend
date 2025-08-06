@@ -59,7 +59,7 @@ export class ProductComponent implements OnInit {
   }
 
   public addProduct(producto: any) {
-    console.log(producto)
+    sessionStorage.setItem('isFromRandomOrder', 'false')
     const quantity = this.selectedQuantity?.value || 1;
     this.store.dispatch(addToCart({ product: producto, quantity: quantity }));
   }

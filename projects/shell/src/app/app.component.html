@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex justify-end items-center gap-8">
-                <button pButton type="button" label="Pedido aleatorio" class="p-button-warning" (click)="goToRandomOrder()"></button>
+                <p-chip label="Ir a comprar" icon="pi pi-shopping-cart" styleClass="p-mr-2" [routerLink]="['/']" class="cursor-pointer"></p-chip>
                 <button pButton pRipple type="button" icon="pi pi-user"
                     class="p-button-rounded p-button-info p-button-outlined" (click)="userMenu.toggle($event)">
                 </button>
