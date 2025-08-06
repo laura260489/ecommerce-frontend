@@ -12,7 +12,6 @@ import { Observable } from 'rxjs/internal/Observable';
 * @autor laurarojas
 */
 export class LoginAuthGuard implements CanActivate {
-  //* Guarda lo datos del session
 
   constructor(private readonly router: Router) { }
 
@@ -27,15 +26,26 @@ export class LoginAuthGuard implements CanActivate {
 
     const user = JSON.parse(sessionStorage.getItem('user'));
 
-    if(!this.magamementAdmin(user, state.url)) this.router.navigate(['/'])
+    const isAllowed = this.magamementAdmin(user, state.url);
+
+    if (!isAllowed) {
+      this.router.navigate(['/']);
+      return false;
+    }
 
     return true;
   }
 
-  private magamementAdmin(user: User, route: string): boolean{
-    if(!user) {
+  private magamementAdmin(user: User, route: string): boolean {
+    if (!user) {
       return false;
-    } else if(route.includes('panel-control') && !user.role.includes('admin')) return false;
+    }
+
+    if (route.includes('panel-control') && !user.role.includes('admin')) {
+      return false;
+    }
+
+    return true;
   }
 
 }

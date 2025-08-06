@@ -22,6 +22,8 @@ export class EditUserComponent implements OnInit {
 
   user$ = this.store.select(selectUser);
 
+  private userId: string = "";
+
   constructor(private fb: FormBuilder, private http: HttpClient, public config: DynamicDialogConfig, private modalInformationService: ModalInformationService, private store: Store) { }
 
   ngOnInit() {
@@ -36,8 +38,9 @@ export class EditUserComponent implements OnInit {
       roles: [[], Validators.required],
     });
 
-    this.user$.subscribe((user: User)=>{
-      if(user.role.includes('admin')) this.availableRoles.push({ name: 'Administrador', code: 'admin' })
+    this.user$.subscribe((user: User) => {
+      if (user.role.includes('admin')) this.availableRoles.push({ name: 'Administrador', code: 'admin' });
+      this.userId = user.id;
     })
 
     if (this.idUser != undefined) {
@@ -87,16 +90,20 @@ export class EditUserComponent implements OnInit {
         }
       ).subscribe({
         next: (response) => {
-          if(response){ 
-            const user: User = {
-              id: response.id,
-              firstName: response.first_name,
-              lastName: response.last_name,
-              frecuent: response.frecuent,
-              sub: response.email,
-              role: response.roles
+          if (response) {
+            if (response.id == this.userId) {
+              const user: User = {
+                id: response.id,
+                firstName: response.first_name,
+                lastName: response.last_name,
+                frecuent: response.frecuent,
+                sub: response.email,
+                role: response.roles
+              }
+              this.store.dispatch(updateUser({ user: user }));
+            } else {
+              window.location.reload();
             }
-            this.store.dispatch(updateUser({ user: user }));
             this.showModal();
           }
         },
