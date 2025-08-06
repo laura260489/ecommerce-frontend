@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { clearCart, DiscountResponse, ModalInformationService, selectCartProducts, selectCartTotalPrice, selectUser, User } from '@commons-lib';
+import { clearCart, DiscountResponse, IMG_BASE, ModalInformationService, selectCartProducts, selectCartTotalPrice, selectUser, User } from '@commons-lib';
 import { Store } from '@ngrx/store';
 import { combineLatest, Subject, takeUntil } from 'rxjs';
 
@@ -20,6 +20,8 @@ export class PaymentComponent implements OnInit {
   public discounts: any[] = [];
 
   public totalPaymentDiscount: number = 0;
+
+  public imgBase = IMG_BASE;
 
   private destroy$ = new Subject<void>();
 

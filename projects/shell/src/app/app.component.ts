@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { addToCart, logout, ProductRandom, ProductResponse, selectCartProducts, selectCartTotalQuantity, selectUser } from '@commons-lib';
+import { logout, selectCartProducts, selectCartTotalQuantity, selectUser } from '@commons-lib';
 
 @Component({
   selector: 'app-root',
@@ -86,16 +86,9 @@ export class AppComponent {
     this.router.navigate(['/pago']);
   }
 
-  public goToRandomOrder() {
-    this.http.get<ProductRandom[]>(process.env['urlBase'] + 'product-random').subscribe({
-      next: (data) => {
-        data.forEach(item => {
-          this.store.dispatch(addToCart({ product: item.product, quantity: item.quantity }));
-        });
-      },
-      error: () => {
-      }
-    });
+
+  public navigateShopping() {
+    this.router.navigate(['/']);
   }
 
 }

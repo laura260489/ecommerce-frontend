@@ -47,6 +47,29 @@ export class AuthInterceptor implements HttpInterceptor {
 
     this._eventBus.sendMessage(showSpinner);
 
+    const excludedUrls = [
+      'product',
+      'login',
+      'category',
+      'register',
+      'random',
+      'discount'
+    ];
+
+    const shouldExclude = excludedUrls.some(url => request.url.includes(url));
+
+    if (!shouldExclude) {
+      const token = sessionStorage.getItem('token');
+
+      if (token) {
+        console.log("siii", token)
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+      }
+    }
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => this.handleError(error)),
       finalize(() => this._eventBus.sendMessage(hideSpinner))
@@ -54,7 +77,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private getErrorMessage(serviceError: any): string {
-    if(serviceError.message) return serviceError.message;
+    if (serviceError.message) return serviceError.message;
     return 'Error en la consulta, intente de nuevo más tarde';
   }
 
